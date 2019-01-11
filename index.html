@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>纪念我们失去的凤儿</title>
+  <style>
+    .missing_her {
+      text-align: center;
+      margin-top: 200px;
+      font-size: 18px;
+    }
+
+    .missing_her_emoji {
+      height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 表情地址 http://twemoji.maxcdn.com/2/test/preview.html -->
+  <div class="missing_her">
+    <p>凤儿不在的第<span id="missing_her_date"></span>天</p>
+    <p>想她！！！</p>
+    <p>想她！！！</p>
+    <p>想她！！！</p>
+    <p>
+      <img class="missing_her_emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+      <img class="missing_her_emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+      <img class="missing_her_emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+    </p>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+<script>
+  const element = document.getElementById('missing_her_date')
+  const when_did_she_leave = moment('20180710', 'YYYYMMDD')
+  const how_many_days_have_she_left = moment().diff(when_did_she_leave, 'day')
+  element.textContent = how_many_days_have_she_left
+</script>
+</html>
