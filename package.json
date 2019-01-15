@@ -4,8 +4,8 @@
   "description": "纪念我们失去的凤儿",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production",
+    "dev": "webpack-dev-server --config webpack.config.dev --open",
+    "build": "webpack --config webpack.config.prod",
     "precommit": "npm run build && git add ."
   },
   "repository": {
