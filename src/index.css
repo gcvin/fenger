@@ -1,0 +1,31 @@
+.missing_her {
+  width: 300px;
+  text-align: center;
+  margin: 200px auto;
+  font-size: 18px;
+  line-height: 24px;
+  color: transparent;
+  background-position-x: 0;
+  transition: background-position-x .1s;
+  background: linear-gradient(to right, #f00, #f60, #ff0, #0c0, #699, #06c, #909);
+  -webkit-background-clip: text;
+}
+
+.missing_her_days {
+  display: inline-block;
+  overflow: hidden;
+  height: 24px;
+  vertical-align: bottom;
+  color: #f00;
+}
+
+.missing_her_days .number {
+  display: inline-block;
+  position: relative;
+  bottom: 0;
+  transition: bottom .1s;
+}
+
+.missing_her_emoji {
+  height: 18px;
+}
