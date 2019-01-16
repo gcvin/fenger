@@ -56,7 +56,7 @@ const barrage = (ele, option) => {
   const img = document.createElement('img')
   const txt = document.createTextNode(option.body)
 
-  const rows = ele.clientHeight / 28
+  const rows = ~~(ele.clientHeight / 28)
   const duration = ~~(Math.random() * 5000) + 15000
   const delay = ~~(Math.random() * 5000)
   const colors = ['#f00', '#f60', '#0c0', '#699', '#06c', '#909']
