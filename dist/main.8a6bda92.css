@@ -1,3 +1,8 @@
+@font-face {
+  font-family: digital;
+  src: url(./dist/digital.909368db.ttf) format("truetype");
+}
+
 .missing_her {
   position: relative;
   width: 100%;
@@ -34,6 +39,7 @@
   padding: 0 20px;
   white-space: nowrap;
   border-radius: 12px;
+  text-decoration: none;
   transition-property: left;
   transition-timing-function: linear;
 }
@@ -47,9 +53,13 @@
 }
 
 .missing_her_days {
+  font-family: digital;
   display: inline-block;
   overflow: hidden;
-  height: 24px;
+  height: 100px;
+  font-size: 100px;
+  line-height: 100px;
+  margin: 0;
   vertical-align: bottom;
   color: #f00;
 }

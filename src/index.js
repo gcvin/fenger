@@ -45,39 +45,63 @@ const timer = setInterval(() => {
   // 满十进一
   for (let n = 0; n < eles.length; n++) {
     if (count / Math.pow(10, n) % 1 === 0) {
-      eles[n].style.bottom = count / Math.pow(10, n) % 10 * 24 + 'px'
+      eles[n].style.bottom = count / Math.pow(10, n) % 10 * 100 + 'px'
     }
   }
 }, 100)
 
-// 评论弹幕
-const barrage = (ele, option) => {
-  const div = document.createElement('div')
-  const img = document.createElement('img')
-  const txt = document.createTextNode(option.body)
+let tops = []
 
+// 评论弹幕
+const barrage = (ele, list) => {
   const rows = ~~(ele.clientHeight / 28)
-  const duration = ~~(Math.random() * 5000) + 15000
-  const delay = ~~(Math.random() * 5000)
+  const tops = new Array(rows).fill().map((_, index) => index * 28)
   const colors = ['#f00', '#f60', '#0c0', '#699', '#06c', '#909']
 
-  img.src = option.user.avatar_url
-  div.appendChild(img)
-  div.appendChild(txt)
+  const append = (len, curr) => {
+    if (curr >= len) {
+      return false
+    }
 
-  div.className = 'text'
-  div.style.top = ~~(Math.random() * rows) * 28 + 'px' 
-  div.style.transitionDuration = duration / 1000 + 's'
-  div.style.transitionDelay =  delay / 1000 + 's'
-  div.style.backgroundColor = colors[~~(Math.random() * 6)]
+    const option = list[curr]
+    const bar = document.createElement('a')
+    const img = document.createElement('img')
+    const txt = document.createTextNode(option.body)
+    
+    const duration = ~~(Math.random() * 5000) + 15000
+    const delay = ~~(Math.random() * 3000)
+    const top = tops.splice(~~(Math.random() * tops.length), 1).pop()
+    const color = colors[~~(Math.random() * 6)]
 
-  ele.appendChild(div)
+    img.src = option.user.avatar_url
+    bar.appendChild(img)
+    bar.appendChild(txt)
 
-  div.style.left = -div.clientWidth + 'px'
+    bar.className = 'text'
+    bar.href = option.html_url
+    bar.style.top = top + 'px' 
+    bar.style.transitionDuration = duration / 1000 + 's'
+    bar.style.transitionDelay =  delay / 1000 + 's'
+    bar.style.backgroundColor = color
 
-  setTimeout(() => {
-    ele.removeChild(div)
-  }, duration + delay)
+    ele.appendChild(bar)
+
+    // 修改left出现从右向左的动画
+    const rect = bar.getBoundingClientRect()
+    bar.style.left = rect.left - rect.right + 'px'
+    
+    const length = tops.length
+    // 动画结束移除DOM
+    setTimeout(() => {
+      ele.removeChild(bar)
+      tops.push(top)
+      !length && append(len, curr + 1)
+    }, duration + delay)
+
+    length && append(len, curr + 1)
+  }
+
+  append(list.length, 0)
 }
 
 const ele = root.querySelector('.missing_her_barrage')
@@ -85,7 +109,5 @@ const url = 'https://api.github.com/repos/gcvin/fenger/issues/3/comments'
 
 // 请求github评论
 axios.get(url).then(rs => {
-  rs.data.forEach(item => {
-    barrage(ele, item)
-  })
+  barrage(ele, rs.data)
 })
