@@ -1,6 +1,6 @@
 @font-face {
   font-family: digital;
-  src: url(./dist/digital.909368db.ttf) format("truetype");
+  src: url(digital.909368db.ttf) format("truetype");
 }
 
 .missing_her {
@@ -42,6 +42,14 @@
   text-decoration: none;
   transition-property: left;
   transition-timing-function: linear;
+}
+
+.missing_her_avatar {
+  display: inline-block;
+  height: 160px;
+  width: 160px;
+  background: url(fenger.01bb88ba.jpg) no-repeat center;
+  background-size: cover;
 }
 
 .missing_her_word {

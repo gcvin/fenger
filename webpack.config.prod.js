@@ -35,8 +35,7 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 8129,
-            name: '[name].[hash:8].[ext]',
-            publicPath: './dist'
+            name: '[name].[hash:8].[ext]'
           }
         }
       }
