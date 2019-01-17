@@ -10,6 +10,7 @@
   margin: 200px auto;
   font-size: 18px;
   line-height: 24px;
+  padding-bottom: 24px;
 }
 
 .missing_her_barrage {
@@ -28,6 +29,20 @@
   height: 20px;
   width: 20px;
   border-radius: 50%;
+}
+
+.missing_her_barrage .static {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  opacity: 0.5;
+  color: #fff;
+  font-size: 12px;
+  padding: 0 20px;
+  white-space: nowrap;
+  border-radius: 12px;
+  background-color: #f60;
 }
 
 .missing_her_barrage .text {

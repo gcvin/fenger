@@ -57,13 +57,16 @@ const barrage = (ele, list) => {
   const rows = ~~(ele.clientHeight / 28)
   const tops = new Array(rows).fill().map((_, index) => index * 28)
   const colors = ['#f00', '#f60', '#0c0', '#699', '#06c', '#909']
+  const length = list.length
+  
+  let current = 0
 
-  const append = (len, curr) => {
-    if (curr >= len) {
+  const append = () => {
+    if (current >= length) {
       return false
     }
 
-    const option = list[curr]
+    const option = list[current]
     const bar = document.createElement('a')
     const img = document.createElement('img')
     const txt = document.createTextNode(option.body)
@@ -89,25 +92,36 @@ const barrage = (ele, list) => {
     // 修改left出现从右向左的动画
     const rect = bar.getBoundingClientRect()
     bar.style.left = rect.left - rect.right + 'px'
-    
-    const length = tops.length
+
     // 动画结束移除DOM
     setTimeout(() => {
       ele.removeChild(bar)
       tops.push(top)
-      !length && append(len, curr + 1)
+      append()
     }, duration + delay)
 
-    length && append(len, curr + 1)
+    current++
+    tops.length && append()
   }
 
-  append(list.length, 0)
+  append()
 }
 
+const list = []
 const ele = root.querySelector('.missing_her_barrage')
-const url = 'https://api.github.com/repos/gcvin/fenger/issues/3/comments'
+const url = 'https://api.github.com/repos/gcvin/fenger/issues/3/comments?per_page=100&page='
 
 // 请求github评论
-axios.get(url).then(rs => {
-  barrage(ele, rs.data)
-})
+const getComments = (page = 1) => {
+  axios.get(url + page).then(rs => {
+    if (!rs.data.length) {
+      barrage(ele, list)
+      return false
+    }
+
+    list.push(...rs.data)
+    getComments(page + 1)
+  })
+}
+
+getComments()
