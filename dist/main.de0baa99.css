@@ -1,8 +1,8 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css);
 @font-face {
   font-family: digital;
-  src: url('./font/digital.ttf') format("truetype");
+  src: url(digital.909368db.ttf) format("truetype");
 }
-
 .missing_her {
   position: relative;
   width: 100%;
@@ -11,18 +11,18 @@
   font-size: 18px;
   line-height: 24px;
   padding-bottom: 24px;
+  background: #f4f4f4;
 }
-
-.missing_her_barrage {
+.missing_her .barrage {
   position: absolute;
   overflow: hidden;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  font-size: 12px;
 }
-
-.missing_her_barrage img {
+.missing_her .barrage img {
   float: left;
   margin-top: 2px;
   margin-right: 10px;
@@ -30,70 +30,66 @@
   width: 20px;
   border-radius: 50%;
 }
-
-.missing_her_barrage .static {
+.missing_her .barrage a {
   position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
   opacity: 0.5;
   color: #fff;
-  font-size: 12px;
-  padding: 0 20px;
-  white-space: nowrap;
-  border-radius: 12px;
-  background-color: #f60;
-}
-
-.missing_her_barrage .text {
-  position: absolute;
-  left: 100%;
-  opacity: 0.5;
-  color: #fff;
-  font-size: 12px;
   padding: 0 20px;
   white-space: nowrap;
   border-radius: 12px;
   text-decoration: none;
-  transition-property: left;
-  transition-timing-function: linear;
 }
-
-.missing_her_avatar {
-  display: inline-block;
+.missing_her .barrage .fixed {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f00;
+}
+.missing_her .barrage .text {
+  left: 100%;
+  animation-fill-mode: forwards;
+  animation-name: toleft;
+  animation-timing-function: linear;
+}
+.missing_her .avatar {
+  margin: 0 auto;
   height: 160px;
   width: 160px;
-  background: url('./img/fenger.jpg') no-repeat center;
+  background: url(fenger.01bb88ba.jpg) no-repeat center;
   background-size: cover;
 }
-
-.missing_her_word {
+.missing_her .words {
   width: 300px;
   margin: 0 auto;
   color: transparent;
   background: linear-gradient(to bottom right, #f00, #f60, #ff0, #0c0, #699, #06c, #909);
   -webkit-background-clip: text;
 }
-
-.missing_her_days {
+.missing_her .words .days {
   font-family: digital;
-  display: inline-block;
   overflow: hidden;
   height: 100px;
   font-size: 100px;
   line-height: 100px;
-  margin: 0;
-  vertical-align: bottom;
   color: #f00;
 }
-
-.missing_her_days .number {
+.missing_her .words .days .number {
   display: inline-block;
   position: relative;
   bottom: 0;
-  transition: bottom .1s;
+  transition: bottom 0.1s;
 }
-
-.missing_her_emoji {
+.missing_her .words .emoji {
   height: 18px;
 }
+@keyframes toleft {
+0% {
+    left: 100%;
+    transform: translateX(0);
+}
+100% {
+    left: 0;
+    transform: translateX(-100%);
+}
+}
+
