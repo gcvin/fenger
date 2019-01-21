@@ -11,6 +11,17 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(js|vue)$/,
+        use: {
+          loader: 'eslint-loader',
+          options: {
+            formatter: require('eslint-friendly-formatter')
+          }
+        },
+        enforce: 'pre',
+        include: path.resolve(__dirname, 'src')
+      },
+      {
         test: /\.vue$/,
         use: {
           loader: 'vue-loader'

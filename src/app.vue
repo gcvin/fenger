@@ -1,32 +1,65 @@
 <template>
   <div class="missing_her">
-    <div class="barrage" ref="barrage">
-      <a class="fixed" href="https://github.com/gcvin/fenger/issues/3">我想对凤儿说</a>
+    <div
+      ref="barrage"
+      class="barrage"
+    >
+      <a
+        class="fixed"
+        href="https://github.com/gcvin/fenger/issues/3"
+      >
+        我想对凤儿说
+      </a>
       <a
         v-for="barrage in barrages"
+        :key="barrage.id"
         :href="barrage.html_url"
         :style="barrage.style"
-        :class="{moving: barrage.moving}"
-        class="text">
+        class="text"
+      >
         <img :src="barrage.user.avatar_url">
         {{ barrage.body }}
       </a>
     </div>
-    <div class="avatar"></div>
-    <div class="words animated" ref="words">
+    <div class="avatar" />
+    <div
+      ref="words"
+      class="words animated"
+    >
       <p>凤儿不在的</p>
       <p>第</p>
-      <div class="days" ref="days">
-        <div v-for="n in length" :key="n" class="number">
-          <div v-for="n in 10" :key="n">{{ n - 1 }}</div>
+      <div
+        ref="days"
+        class="days"
+      >
+        <div
+          v-for="n in length"
+          :key="n"
+          class="number"
+        >
+          <div
+            v-for="m in 10"
+            :key="m"
+          >
+            {{ m - 1 }}
+          </div>
         </div>
       </div>
       <p>天</p>
       <p>想她！！！想她！！！想她！！！</p>
       <p>
-        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
-        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
-        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+        <img
+          class="emoji"
+          src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"
+        >
+        <img
+          class="emoji"
+          src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"
+        >
+        <img
+          class="emoji"
+          src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"
+        >
       </p>
     </div>
   </div>
@@ -135,7 +168,7 @@ export default {
       this.tops.length && this.appendBarrage()
     },
     animate(node, name) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         node.classList.add('animated', name)
 
         const onEnd = () => {
