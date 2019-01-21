@@ -55,6 +55,7 @@
   margin: 0 auto;
   height: 160px;
   width: 160px;
+  border-radius: 50%;
   background: url(fenger.01bb88ba.jpg) no-repeat center;
   background-size: cover;
 }
@@ -62,7 +63,7 @@
   width: 300px;
   margin: 0 auto;
   color: transparent;
-  background: linear-gradient(to bottom right, #f00, #f60, #ff0, #0c0, #699, #06c, #909);
+  background: linear-gradient(to bottom right, #f00, #f60, #0c0, #699, #06c, #909);
   -webkit-background-clip: text;
 }
 .missing_her .words .days {

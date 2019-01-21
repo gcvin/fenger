@@ -85,7 +85,7 @@ export default {
     this.getComments()
 
     const words = this.$refs.words
-    this.animate(words, 'zoomInDown')
+    this.animate(words, 'rotateIn')
   },
   methods: {
     // 递归请求github评论
@@ -214,6 +214,7 @@ export default {
     margin: 0 auto;
     height: 160px;
     width: 160px;
+    border-radius: 50%;
     background: url('./img/fenger.jpg') no-repeat center;
     background-size: cover;
   }
@@ -226,7 +227,6 @@ export default {
       to bottom right,
       #f00,
       #f60,
-      #ff0,
       #0c0,
       #699,
       #06c,
