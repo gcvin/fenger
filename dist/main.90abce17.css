@@ -7,11 +7,12 @@
   position: relative;
   width: 100%;
   text-align: center;
-  margin: 200px auto;
+  margin: 100px auto;
   font-size: 18px;
   line-height: 24px;
   padding-bottom: 24px;
   background: #f4f4f4;
+  padding: 20px 0;
 }
 .missing_her .barrage {
   position: absolute;
@@ -40,10 +41,10 @@
   text-decoration: none;
 }
 .missing_her .barrage .fixed {
-  bottom: 0;
+  top: 88px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #f00;
+  background-color: #06c;
 }
 .missing_her .barrage .text {
   left: 100%;
@@ -60,11 +61,19 @@
   background-size: cover;
 }
 .missing_her .words {
-  width: 300px;
+  width: 400px;
   margin: 0 auto;
   color: transparent;
   background: linear-gradient(to bottom right, #f00, #f60, #0c0, #699, #06c, #909);
   -webkit-background-clip: text;
+}
+.missing_her .words .comment {
+  font-size: 14px;
+  text-align: right;
+}
+.missing_her .words .weather {
+  font-size: 14px;
+  width: 100%;
 }
 .missing_her .words .days {
   font-family: digital;

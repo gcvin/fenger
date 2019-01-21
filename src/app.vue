@@ -26,6 +26,20 @@
       ref="words"
       class="words animated"
     >
+      <p>{{ poetry }}</p>
+      <table class="weather">
+        <tbody>
+          <tr v-for="weather in weathers" :key="weather.date">
+            <td width="30%">{{ weather.date }}</td>
+            <td width="20%">{{ showWeek(weather.week) }}</td>
+            <td width="30%">{{ showTemp(weather.nighttemp, weather.daytemp) }}</td>
+            <td width="20%">{{ showWeather(weather.nightweather, weather.dayweather) }}</td>
+          </tr>
+          <tr>
+            <td colspan="4">风云莫测，宜未雨而绸缪</td>
+          </tr>
+        </tbody>
+      </table>
       <p>凤儿不在的</p>
       <p>第</p>
       <div
@@ -61,11 +75,14 @@
           src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"
         >
       </p>
+      <p class="comment">——峰哥、放爷、茜爷、肖大爷、张大爷泣血相赠</p>
     </div>
   </div>
 </template>
 <script>
 import moment from 'moment'
+const list = []
+const tops = []
 const colors = [
   '#f00', '#f60', '#0c0',
   '#699', '#06c', '#909'
@@ -74,9 +91,9 @@ let barrageDom = null
 export default {
   data () {
     return {
-      list: [],
-      tops: [],
-      barrages: []
+      barrages: [],
+      weathers: [],
+      poetry: ''
     }
   },
   computed: {
@@ -87,6 +104,10 @@ export default {
     length () {
       return (this.days + '').length
     }
+  },
+  created () {
+    this.getWeather()
+    this.getPoetry()
   },
   mounted () {
     const daysDom = this.$refs.days
@@ -114,7 +135,7 @@ export default {
     barrageDom = this.$refs.barrage
     const rows = ~~(barrageDom.clientHeight / 28)
     
-    this.tops.push(...new Array(rows).fill().map((_, index) => index * 28))
+    tops.push(...new Array(rows).fill().map((_, index) => index * 28))
     this.getComments()
 
     const words = this.$refs.words
@@ -128,24 +149,24 @@ export default {
         const len = rs.data.length
 
         if (!len || len !== 100) {
-          this.list.push(...rs.data)
+          list.push(...rs.data)
           this.appendBarrage()
           return false
         }
 
-        this.list.push(...rs.data)
+        list.push(...rs.data)
         this.getComments(page + 1)
       })
     },
     appendBarrage () {
-      if (!this.list.length) {
+      if (!list.length) {
         return false
       }
 
-      const option = this.list.pop()
+      const option = list.pop()
       const duration = ~~(Math.random() * 5000) + 15000
       const delay = ~~(Math.random() * 3000)
-      const top = this.tops.splice(~~(Math.random() * this.tops.length), 1).pop()
+      const top = tops.splice(~~(Math.random() * tops.length), 1).pop()
       const color = colors[~~(Math.random() * 6)]
 
       option.style = {
@@ -161,11 +182,34 @@ export default {
       setTimeout(() => {
         const index = this.barrages.indexOf(option)
         this.barrages.splice(index, 1)
-        this.tops.push(top)
+        tops.push(top)
         this.appendBarrage()
       }, duration + delay)
 
-      this.tops.length && this.appendBarrage()
+      tops.length && this.appendBarrage()
+    },
+    getPoetry () {
+      this.$http.get('https://v2.jinrishici.com/one.json').then(rs => {
+        this.poetry = rs.data.data.content
+      })
+    },
+    getWeather () {
+      const key = 'd8bd8efbc4364b2c8ba68ad7526f9842'
+      const code = 500112
+      const url = `https://restapi.amap.com/v3/weather/weatherInfo?key=${key}&city=${code}&extensions=all`
+      this.$http.get(url).then(rs => {
+        this.weathers = rs.data.forecasts[0].casts
+      })
+    },
+    showWeek (week) {
+      const weeks = ['日', '一', '二', '三', '四', '五', '六']
+      return `星期${weeks[week]}`
+    },
+    showTemp (night, day) {
+      return `${night}℃ ~ ${day}℃`
+    },
+    showWeather (night, day) {
+      return night === day ? night : `${night}转${day}`
     },
     animate(node, name) {
       return new Promise((resolve) => {
@@ -194,11 +238,12 @@ export default {
   position: relative;
   width: 100%;
   text-align: center;
-  margin: 200px auto;
+  margin: 100px auto;
   font-size: 18px;
   line-height: 24px;
   padding-bottom: 24px;
   background: #f4f4f4;
+  padding: 20px 0;
 
   .barrage {
     position: absolute;
@@ -229,10 +274,10 @@ export default {
     }
 
     .fixed {
-      bottom: 0;
+      top: 88px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: #f00;
+      background-color: #06c;
     }
 
     .text {
@@ -253,7 +298,7 @@ export default {
   }
 
   .words {
-    width: 300px;
+    width: 400px;
     margin: 0 auto;
     color: transparent;
     background: linear-gradient(
@@ -266,6 +311,16 @@ export default {
       #909
     );
     -webkit-background-clip: text;
+
+    .comment {
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .weather {
+      font-size: 14px;
+      width: 100%;
+    }
 
     .days {
       font-family: digital;
