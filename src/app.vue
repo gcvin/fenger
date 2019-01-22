@@ -22,11 +22,8 @@
       </a>
     </div>
     <div class="avatar" />
-    <div
-      ref="words"
-      class="words animated"
-    >
-      <p>{{ poetry }}</p>
+    <div class="words">
+      <p class="animated slow lyrics" ref="lyrics">{{ lyrics }}</p>
       <table class="weather">
         <tbody>
           <tr v-for="weather in weathers" :key="weather.date">
@@ -87,13 +84,12 @@ const colors = [
   '#f00', '#f60', '#0c0',
   '#699', '#06c', '#909'
 ]
-let barrageDom = null
 export default {
   data () {
     return {
       barrages: [],
       weathers: [],
-      poetry: ''
+      lyrics: '_'
     }
   },
   computed: {
@@ -107,42 +103,43 @@ export default {
   },
   created () {
     this.getWeather()
-    this.getPoetry()
   },
   mounted () {
-    const daysDom = this.$refs.days
-    const numsDom = daysDom.childNodes
-    const length = numsDom.length
+    this.numberScroll()
 
-    let count = 0
-    // 数字滚动
-    const timer = setInterval(() => {
-      count++
-
-      if (count > this.days) {
-        clearInterval(timer)
-      }
-
-      // 满十进一
-      for (let n = 0; n < length; n++) {
-        if (count / Math.pow(10, n) % 1 === 0) {
-          numsDom[length - n - 1].style.bottom = count / Math.pow(10, n) % 10 * 100 + 'px'
-        }
-      }
-    }, 100)
-
-    // 评论弹幕
-    barrageDom = this.$refs.barrage
+    const barrageDom = this.$refs.barrage
     const rows = ~~(barrageDom.clientHeight / 28)
     
     tops.push(...new Array(rows).fill().map((_, index) => index * 28))
     this.getComments()
 
-    const words = this.$refs.words
-    this.animate(words, 'rotateIn')
+    this.typingLyrics()
   },
   methods: {
-    // 递归请求github评论
+    // 数字滚动
+    numberScroll () {
+      const daysDom = this.$refs.days
+      const numsDom = daysDom.childNodes
+      const length = numsDom.length
+
+      let count = 0
+      
+      const timer = setInterval(() => {
+        count++
+
+        if (count > this.days) {
+          clearInterval(timer)
+        }
+
+        // 满十进一
+        for (let n = 0; n < length; n++) {
+          if (count / Math.pow(10, n) % 1 === 0) {
+            numsDom[length - n - 1].style.bottom = count / Math.pow(10, n) % 10 * 100 + 'px'
+          }
+        }
+      }, 100)
+    },
+    // 请求评论
     getComments (page = 1) {
       const url = 'https://api.github.com/repos/gcvin/fenger/issues/3/comments?per_page=100&page='
       this.$http.get(url + page).then(rs => {
@@ -158,6 +155,7 @@ export default {
         this.getComments(page + 1)
       })
     },
+    // 添加弹幕
     appendBarrage () {
       if (!list.length) {
         return false
@@ -188,10 +186,49 @@ export default {
 
       tops.length && this.appendBarrage()
     },
-    getPoetry () {
-      this.$http.get('https://v2.jinrishici.com/one.json').then(rs => {
-        this.poetry = rs.data.data.content
-      })
+    typingLyrics () {
+      const lyrics = this.$refs.lyrics
+      const contentArr = [
+        '有些人走着走着就散了',
+        '有些事看着看着就淡了',
+        '有多少无人能懂的不快乐',
+        '就有多少无能为力的不舍',
+        '有些人想着想着就忘了',
+        '有些梦做着做着就醒了',
+        '才发现从前是我太天真',
+        '现实又那么残忍'
+      ]
+
+      const next = (idx = 0) => {
+        let index = 0
+        const content = contentArr[idx]
+
+        const timer = setInterval(() => {
+          index++
+          const sub = content.substr(0, index)
+
+          if (content.length !== index) {
+            this.lyrics = sub + '_'
+            return false
+          }
+
+          idx++
+          this.lyrics = sub
+          clearInterval(timer)
+
+          this.animate(lyrics, 'fadeOut').then(() => {
+            this.lyrics = '_'
+
+            if (idx === contentArr.length) {
+              return false
+            }
+            
+            next(idx)
+          })
+        }, 200)
+      }
+      
+      next()
     },
     getWeather () {
       const key = 'd8bd8efbc4364b2c8ba68ad7526f9842'
@@ -238,10 +275,9 @@ export default {
   position: relative;
   width: 100%;
   text-align: center;
-  margin: 100px auto;
+  margin-top: 100px;
   font-size: 18px;
   line-height: 24px;
-  padding-bottom: 24px;
   background: #f4f4f4;
   padding: 20px 0;
 
@@ -312,6 +348,11 @@ export default {
     );
     -webkit-background-clip: text;
 
+    .lyrics {
+      color: #699;
+      background: #f4f4f4;
+    }
+
     .comment {
       font-size: 14px;
       text-align: right;
@@ -342,11 +383,16 @@ export default {
       height: 18px;
     }
   }
+
+  @media only screen and (max-width: 416px) {
+    .words {
+      width:100%;
+    }
+  }
 }
 
-@keyframes toleft
-{
-	0%   {
+@keyframes toleft {
+	0% {
     left: 100%;
     transform: translateX(0);
   }
