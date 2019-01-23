@@ -72,8 +72,8 @@
           src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"
         >
       </p>
-      <p class="comment">——峰哥、放爷、茜爷、肖大爷、张大爷泣血相赠</p>
     </div>
+    <p class="comment">——峰哥、放爷、茜爷、肖大爷、张大爷泣血相赠</p>
   </div>
 </template>
 <script>
@@ -89,7 +89,7 @@ export default {
     return {
       barrages: [],
       weathers: [],
-      lyrics: '_'
+      lyrics: ''
     }
   },
   computed: {
@@ -186,6 +186,7 @@ export default {
 
       tops.length && this.appendBarrage()
     },
+    // 添加歌词
     typingLyrics () {
       const lyrics = this.$refs.lyrics
       const contentArr = [
@@ -198,6 +199,7 @@ export default {
         '才发现从前是我太天真',
         '现实又那么残忍'
       ]
+      this.lyrics = '_'
 
       const next = (idx = 0) => {
         let index = 0
@@ -349,13 +351,8 @@ export default {
     -webkit-background-clip: text;
 
     .lyrics {
-      color: #699;
+      color: #ff9900;
       background: #f4f4f4;
-    }
-
-    .comment {
-      font-size: 14px;
-      text-align: right;
     }
 
     .weather {
@@ -382,6 +379,13 @@ export default {
     .emoji {
       height: 18px;
     }
+  }
+
+  .comment {
+    color: #5cadff;
+    font-size: 14px;
+    text-align: right;
+    padding-right: 20px;
   }
 
   @media only screen and (max-width: 416px) {

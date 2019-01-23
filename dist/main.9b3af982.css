@@ -67,12 +67,8 @@
   -webkit-background-clip: text;
 }
 .missing_her .words .lyrics {
-  color: #699;
+  color: #ff9900;
   background: #f4f4f4;
-}
-.missing_her .words .comment {
-  font-size: 14px;
-  text-align: right;
 }
 .missing_her .words .weather {
   font-size: 14px;
@@ -94,6 +90,12 @@
 }
 .missing_her .words .emoji {
   height: 18px;
+}
+.missing_her .comment {
+  color: #5cadff;
+  font-size: 14px;
+  text-align: right;
+  padding-right: 20px;
 }
 @media only screen and (max-width: 416px) {
 .missing_her .words {
