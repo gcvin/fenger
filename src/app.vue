@@ -241,7 +241,7 @@ export default {
       })
     },
     showWeek (week) {
-      const weeks = ['日', '一', '二', '三', '四', '五', '六']
+      const weeks = ['日', '一', '二', '三', '四', '五', '六', '日']
       return `星期${weeks[week]}`
     },
     showTemp (night, day) {
