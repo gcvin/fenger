@@ -1,13 +1,7 @@
 <template>
   <div class="missing_her">
-    <div
-      ref="barrage"
-      class="barrage"
-    >
-      <a
-        class="fixed"
-        href="https://github.com/gcvin/fenger/issues/3"
-      >
+    <div ref="barrage" class="barrage">
+      <a class="fixed" href="https://github.com/gcvin/fenger/issues/3">
         我想对凤儿说
       </a>
       <a
@@ -22,8 +16,8 @@
       </a>
     </div>
     <div class="avatar" />
+    <div class="animated slow lyrics" ref="lyrics">{{ lyrics }}</div>
     <div class="words">
-      <p class="animated slow lyrics" ref="lyrics">{{ lyrics }}</p>
       <table class="weather">
         <tbody>
           <tr v-for="weather in weathers" :key="weather.date">
@@ -39,19 +33,9 @@
       </table>
       <p>凤儿不在的</p>
       <p>第</p>
-      <div
-        ref="days"
-        class="days"
-      >
-        <div
-          v-for="n in length"
-          :key="n"
-          class="number"
-        >
-          <div
-            v-for="m in 10"
-            :key="m"
-          >
+      <div ref="days" class="days">
+        <div v-for="n in length" :key="n" class="number">
+          <div v-for="m in 10" :key="m">
             {{ m - 1 }}
           </div>
         </div>
@@ -59,18 +43,9 @@
       <p>天</p>
       <p>想她！！！想她！！！想她！！！</p>
       <p>
-        <img
-          class="emoji"
-          src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"
-        >
-        <img
-          class="emoji"
-          src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"
-        >
-        <img
-          class="emoji"
-          src="https://twemoji.maxcdn.com/2/72x72/1f62d.png"
-        >
+        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
+        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
       </p>
     </div>
     <p class="comment">——峰哥、放爷、茜爷、肖大爷、张大爷泣血相赠</p>
@@ -189,7 +164,7 @@ export default {
     // 添加歌词
     typingLyrics () {
       const lyrics = this.$refs.lyrics
-      const contentArr = [
+      const lyricsArr = [
         '有些人走着走着就散了',
         '有些事看着看着就淡了',
         '有多少无人能懂的不快乐',
@@ -199,11 +174,10 @@ export default {
         '才发现从前是我太天真',
         '现实又那么残忍'
       ]
-      this.lyrics = '_'
 
       const next = (idx = 0) => {
         let index = 0
-        const content = contentArr[idx]
+        const content = lyricsArr[idx]
 
         const timer = setInterval(() => {
           index++
@@ -219,9 +193,10 @@ export default {
           clearInterval(timer)
 
           this.animate(lyrics, 'fadeOut').then(() => {
-            this.lyrics = '_'
+            this.lyrics = ''
 
-            if (idx === contentArr.length) {
+            if (idx === lyricsArr.length) {
+              this.lyrics = '一壶浊酒尽余欢，今宵别梦寒'
               return false
             }
             
@@ -273,18 +248,22 @@ export default {
   src: url('./font/digital.ttf') format("truetype");
 }
 
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
 .missing_her {
-  position: relative;
-  width: 100%;
+  min-height: 100%;
   text-align: center;
-  margin-top: 100px;
   font-size: 18px;
   line-height: 24px;
   background: #f4f4f4;
   padding: 20px 0;
 
   .barrage {
-    position: absolute;
+    position: fixed;
     overflow: hidden;
     top: 0;
     left: 0;
@@ -312,9 +291,9 @@ export default {
     }
 
     .fixed {
-      top: 88px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
       background-color: #06c;
     }
 
@@ -330,9 +309,15 @@ export default {
     margin: 0 auto;
     height: 160px;
     width: 160px;
-    border-radius: 50%;
+    border-radius: 10px;
     background: url('./img/fenger.jpg') no-repeat center;
     background-size: cover;
+  }
+
+  .lyrics {
+    color: #ff9900;
+    height: 48px;
+    line-height: 48px;
   }
 
   .words {
@@ -349,11 +334,6 @@ export default {
       #909
     );
     -webkit-background-clip: text;
-
-    .lyrics {
-      color: #ff9900;
-      background: #f4f4f4;
-    }
 
     .weather {
       font-size: 14px;
