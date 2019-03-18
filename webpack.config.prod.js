@@ -49,6 +49,10 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader"]
       },
       {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+      },
+      {
         test: /\.less$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"]
       },
@@ -75,7 +79,7 @@ module.exports = {
     entrypoints: false
   },
   plugins: [
-    new CleanWebpackPlugin(['./dist', './index.html']),
+    new CleanWebpackPlugin(),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "../index.html"

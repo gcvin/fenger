@@ -48,6 +48,10 @@ module.exports = {
         use: ["vue-style-loader", "css-loader"]
       },
       {
+        test: /\.scss$/,
+        use: ["vue-style-loader", "css-loader", "sass-loader"]
+      },
+      {
         test: /\.less$/,
         use: ["vue-style-loader", "css-loader", "less-loader"]
       },
