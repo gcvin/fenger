@@ -194,7 +194,6 @@ export default {
             this.lyrics = "";
 
             if (idx === lyricsArr.length) {
-              this.lyrics = "一壶浊酒尽余欢，今宵别梦寒";
               return false;
             }
 
