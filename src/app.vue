@@ -38,11 +38,7 @@
       </div>
       <p>天</p>
       <p>想她！！！想她！！！想她！！！</p>
-      <p>
-        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
-        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
-        <img class="emoji" src="https://twemoji.maxcdn.com/2/72x72/1f62d.png">
-      </p>
+      <p>😭😭😭😭😭😭</p>
     </div>
     <p class="comment">——峰哥、放爷、茜爷、肖大爷、张大爷泣血相赠</p>
     <a class="hover" href="javascript:;">
@@ -330,6 +326,7 @@ body {
       #06c,
       #909
     );
+    background-clip: text;
     -webkit-background-clip: text;
 
     .weather {
